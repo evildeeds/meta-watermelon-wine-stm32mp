@@ -1,4 +1,7 @@
-SRC_URI += " file://clk-stm32-core.c "
+SRC_URI += " \
+    file://clk-stm32-core.c \
+    file://clk-stm32mp2.c \
+"
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
@@ -25,6 +28,9 @@ do_sed_patch() {
       -e 's|#define DEBUG_UART_FINDIV_CFGR\s*RCC_FINDIV8CFGR|#define DEBUG_UART_FINDIV_CFGR                  RCC_FINDIV8CFGR|' \
       ${S}/plat/st/stm32mp2/stm32mp2_def.h
 
+      mv ${S}/drivers/st/clk/clk-stm32-core.c ${S}/drivers/st/clk/clk-stm32-core.c.bak
       cp ${WORKDIR}/clk-stm32-core.c ${S}/drivers/st/clk/clk-stm32-core.c
+      mv ${S}/drivers/st/clk/clk-stm32mp2.c  ${S}/drivers/st/clk/clk-stm32mp2.c.bak
+      cp ${WORKDIR}/clk-stm32mp2.c ${S}/drivers/st/clk/clk-stm32mp2.c
 }
 addtask do_sed_patch after do_patch before do_configure
