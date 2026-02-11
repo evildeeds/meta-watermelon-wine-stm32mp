@@ -735,6 +735,7 @@ static struct clk_oscillator_data stm32mp2_osc_data[] = {
 static const char *clk_stm32_get_oscillator_name(enum stm32_osc id)
 {
 	if (id < NB_OSCILLATOR) {
+		NOTICE("clk_stm32_get_oscillator_name: id = %i", id);
 		return stm32mp2_osc_data[id].name;
 	}
 
@@ -929,7 +930,7 @@ static void clk_stm32_osc_init(struct stm32_clk_priv *priv, int id)
 {
 	struct clk_oscillator_data *osc_data = clk_oscillator_get_data(priv, id);
 	const char *name = osc_data->name;
-
+	NOTICE("clk_stm32_osc_init: id = %i, name = %s", id, name);
 	osc_data->frequency = clk_stm32_get_dt_oscillator_frequency(name);
 }
 
