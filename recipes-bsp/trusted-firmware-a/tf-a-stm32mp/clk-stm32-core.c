@@ -920,11 +920,13 @@ int clk_stm32_init(struct stm32_clk_priv *priv, uintptr_t base)
 	stm32_clock_data = priv;
 
 	priv->base = base;
-
+		NOTICE("clk_stm32_init: priv->num = %i", priv->num);
 	for (i = 0U; i < priv->num; i++) {
+		NOTICE("clk_stm32_init: i = %i", i);
 		const struct stm32_clk_ops *ops = _clk_get_ops(priv, i);
 
 		if (ops->init != NULL) {
+			NOTICE("clk_stm32_init: ops->init(priv, %i);", i);
 			ops->init(priv, i);
 		}
 	}
