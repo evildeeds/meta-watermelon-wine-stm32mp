@@ -1,6 +1,7 @@
 SRC_URI += " \
     file://clk-stm32-core.c \
     file://clk-stm32mp2.c \
+    file://stm32mp2_ram.c \
 "
 
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
@@ -30,7 +31,9 @@ do_sed_patch() {
 
       mv ${S}/drivers/st/clk/clk-stm32-core.c ${S}/drivers/st/clk/clk-stm32-core.c.bak
       cp ${WORKDIR}/clk-stm32-core.c ${S}/drivers/st/clk/clk-stm32-core.c
-      mv ${S}/drivers/st/clk/clk-stm32mp2.c  ${S}/drivers/st/clk/clk-stm32mp2.c.bak
+      mv ${S}/drivers/st/clk/clk-stm32mp2.c ${S}/drivers/st/clk/clk-stm32mp2.c.bak
       cp ${WORKDIR}/clk-stm32mp2.c ${S}/drivers/st/clk/clk-stm32mp2.c
+      mv ${S}/drivers/st/ddr/stm32mp2_ram.c ${S}/drivers/st/ddr/stm32mp2_ram.c.bak
+      cp ${WORKDIR}/stm32mp2_ram.c ${S}/drivers/st/ddr/stm32mp2_ram.c
 }
 addtask do_sed_patch after do_patch before do_configure

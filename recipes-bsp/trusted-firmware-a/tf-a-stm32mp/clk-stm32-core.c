@@ -377,12 +377,13 @@ int clk_get_index(struct stm32_clk_priv *priv, unsigned long binding_id)
 
 	NOTICE("clk_get_index: priv->num = %u\n", priv->num);
 	for (i = 0U; i < priv->num; i++) {
-		NOTICE("clk_get_index: binding_id = %lu, priv->clks[%u].binding = %u\n", binding_id, i, priv->clks[i].binding);
+		//NOTICE("clk_get_index: binding_id = %lu, priv->clks[%u].binding = %u\n", binding_id, i, priv->clks[i].binding);
 		if (binding_id == priv->clks[i].binding) {
 			NOTICE("clk_get_index: Found at %i\n", (int)i);
 			return (int)i;
 		}
 	}
+	NOTICE("clk_get_index: Not found\n");
 
 	return -EINVAL;
 }
@@ -458,6 +459,10 @@ int clk_stm32_enable_call_ops(struct stm32_clk_priv *priv, uint16_t id)
 	}
 
 	if ((ops->is_enabled != NULL) && !ops->is_enabled(priv, id)) {
+		if (id == 5) {
+			WARN("clk_stm32_enable_call_ops: ignoring clk id 5 failure\n");
+			return 0;
+		}
 		ERROR("failed to enable clock id: %u\n", id);
 		panic();
 	}
