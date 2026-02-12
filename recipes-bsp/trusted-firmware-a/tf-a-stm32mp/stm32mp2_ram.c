@@ -136,7 +136,7 @@ static int stm32mp2_ddr_setup(void)
 	}
 
 	if (config.self_refresh) {
-		NOTICE("Anropar stm32mp_ddr_test_rw_access()");
+		NOTICE("Anropar stm32mp_ddr_test_rw_access()\n");
 		uret = stm32mp_ddr_test_rw_access();
 		if (uret != 0UL) {
 			ERROR("DDR rw test: can't access memory @ 0x%lx\n", uret);
@@ -144,21 +144,21 @@ static int stm32mp2_ddr_setup(void)
 		}
 	} else {
 		size_t retsize;
-		NOTICE("Anropar stm32mp_ddr_test_data_bus()");
+		NOTICE("Anropar stm32mp_ddr_test_data_bus()\n");
 		uret = stm32mp_ddr_test_data_bus();
 		if (uret != 0UL) {
 			ERROR("DDR data bus test: can't access memory @ 0x%lx\n", uret);
 			panic();
 		}
 
-		NOTICE("Anropar stm32mp_ddr_test_addr_bus(config.info.size) med config.info.size = %i", config.info.size);
+		NOTICE("Anropar stm32mp_ddr_test_addr_bus(config.info.size) med config.info.size = %i\n", config.info.size);
 		uret = stm32mp_ddr_test_addr_bus(config.info.size);
 		if (uret != 0UL) {
 			ERROR("DDR addr bus test: can't access memory @ 0x%lx\n", uret);
 			panic();
 		}
 
-		NOTICE("Anropar stm32mp_ddr_check_size");
+		NOTICE("Anropar stm32mp_ddr_check_size\n");
 		retsize = stm32mp_ddr_check_size();
 		if (retsize < config.info.size) {
 			ERROR("DDR size: 0x%zx does not match DT config: 0x%zx\n",
