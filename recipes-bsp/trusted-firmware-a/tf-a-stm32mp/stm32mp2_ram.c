@@ -151,7 +151,7 @@ static int stm32mp2_ddr_setup(void)
 			panic();
 		}
 
-		NOTICE("Anropar stm32mp_ddr_test_addr_bus(config.info.size) med config.info.size = %i\n", config.info.size);
+		NOTICE("Anropar stm32mp_ddr_test_addr_bus(config.info.size) med config.info.size = %lu\n", config.info.size);
 		uret = stm32mp_ddr_test_addr_bus(config.info.size);
 		if (uret != 0UL) {
 			ERROR("DDR addr bus test: can't access memory @ 0x%lx\n", uret);

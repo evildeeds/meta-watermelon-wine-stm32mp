@@ -47,13 +47,13 @@ uintptr_t stm32mp_ddr_test_rw_access(void)
 
 	mmio_write_pattern(STM32MP_DDR_BASE, DDR_PATTERN);
 
-	NOTICE("if (mmio_read_pattern(STM32MP_DDR_BASE) != DDR_PATTERN) {");
+	NOTICE("if (mmio_read_pattern(STM32MP_DDR_BASE) != DDR_PATTERN) {\n");
 	if (mmio_read_pattern(STM32MP_DDR_BASE) != DDR_PATTERN) {
-		NOTICE("Retunerar STM32MP_DDR_BASE");
+		NOTICE("Retunerar STM32MP_DDR_BASE\n");
 		return STM32MP_DDR_BASE;
 	}
 
-	NOTICE("Skriver mmio_write_pattern(STM32MP_DDR_BASE, saved_value);");
+	NOTICE("Skriver mmio_write_pattern(STM32MP_DDR_BASE, saved_value);\n");
 	mmio_write_pattern(STM32MP_DDR_BASE, saved_value);
 
 	return 0UL;
@@ -71,16 +71,16 @@ uintptr_t stm32mp_ddr_test_data_bus(void)
 {
 	u_register_t pattern;
 
-	NOTICE("Starting for-loop stm32mp_ddr_test_data_bus(void)");
+	NOTICE("Starting for-loop stm32mp_ddr_test_data_bus(void)\n");
 	for (pattern = 1U; pattern != 0U; pattern <<= 1U) {
-		NOTICE("write mmio_write_pattern(STM32MP_DDR_BASE, %i);", pattern);
+		NOTICE("write mmio_write_pattern(STM32MP_DDR_BASE, %lu);\n", pattern);
 		mmio_write_pattern(STM32MP_DDR_BASE, pattern);
-		
+
 		if (mmio_read_pattern(STM32MP_DDR_BASE) != pattern) {
-			NOTICE("if (mmio_read_pattern(STM32MP_DDR_BASE) != pattern) {");
+			NOTICE("if (mmio_read_pattern(STM32MP_DDR_BASE) != pattern) {\n");
 			return STM32MP_DDR_BASE;
 		}
-		NOTICE("Pattern OK");
+		NOTICE("Pattern OK\n");
 	}
 
 	return 0UL;
@@ -113,7 +113,7 @@ uintptr_t stm32mp_ddr_test_addr_bus(size_t size)
 	for (offset = sizeof(u_register_t); (offset & addressmask) != 0U;
 	     offset <<= 1U) {
 		if (mmio_read_pattern(STM32MP_DDR_BASE + offset) != DDR_PATTERN) {
-			NOTICE("if (mmio_read_pattern(STM32MP_DDR_BASE + offset) != DDR_PATTERN) {");
+			NOTICE("if (mmio_read_pattern(STM32MP_DDR_BASE + offset) != DDR_PATTERN) {\n");
 			return STM32MP_DDR_BASE + offset;
 		}
 	}
@@ -126,7 +126,7 @@ uintptr_t stm32mp_ddr_test_addr_bus(size_t size)
 		mmio_write_pattern(STM32MP_DDR_BASE + testoffset, DDR_ANTIPATTERN);
 
 		if (mmio_read_pattern(STM32MP_DDR_BASE) != DDR_PATTERN) {
-			NOTICE("if (mmio_read_pattern(STM32MP_DDR_BASE) != DDR_PATTERN) {");
+			NOTICE("if (mmio_read_pattern(STM32MP_DDR_BASE) != DDR_PATTERN) {\n");
 			return STM32MP_DDR_BASE;
 		}
 
@@ -134,7 +134,7 @@ uintptr_t stm32mp_ddr_test_addr_bus(size_t size)
 		     offset <<= 1U) {
 			if ((mmio_read_pattern(STM32MP_DDR_BASE + offset) != DDR_PATTERN) &&
 			    (offset != testoffset)) {
-				NOTICE("(mmio_read_pattern(STM32MP_DDR_BASE + offset) != DDR_PATTERN) &&(offset != testoffset)) {");
+				NOTICE("(mmio_read_pattern(STM32MP_DDR_BASE + offset) != DDR_PATTERN) &&(offset != testoffset)) {\n");
 				return STM32MP_DDR_BASE + offset;
 			}
 		}
